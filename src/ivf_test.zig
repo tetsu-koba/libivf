@@ -7,10 +7,8 @@ const os = std.os;
 
 const IVF = @import("ivf.zig");
 
-fn checkIVF(dirname: []const u8, filename: []const u8) !void {
-    var dir = try fs.cwd().openDir(dirname, .{});
-    defer dir.close();
-    var file = try dir.openFile(filename, .{});
+fn checkIVF(filename: []const u8) !void {
+    var file = try fs.cwd().openFile(filename, .{});
     defer file.close();
     var reader = try IVF.IVFReader.init(file);
     defer reader.deinit();
@@ -39,15 +37,13 @@ fn checkIVF(dirname: []const u8, filename: []const u8) !void {
 }
 
 test "IVF reader" {
-    try checkIVF("testfiles", "sample01_vp8.ivf");
+    try checkIVF("testfiles/sample01_vp8.ivf");
 }
 
-fn copyIVF(dirname: []const u8, filename: []const u8, outfiename: []const u8) !void {
-    var dir = try fs.cwd().openDir(dirname, .{});
-    defer dir.close();
-    var file = try dir.openFile(filename, .{});
+fn copyIVF(filename: []const u8, outfiename: []const u8) !void {
+    var file = try fs.cwd().openFile(filename, .{});
     defer file.close();
-    var outfile = try dir.createFile(outfiename, .{});
+    var outfile = try fs.cwd().createFile(outfiename, .{});
     defer outfile.close();
     var reader = try IVF.IVFReader.init(file);
     defer reader.deinit();
@@ -80,6 +76,6 @@ fn copyIVF(dirname: []const u8, filename: []const u8, outfiename: []const u8) !v
 }
 
 test "IVF writer" {
-    try copyIVF("testfiles", "sample01_vp8.ivf", "out.ivf");
-    try checkIVF("testfiles", "out.ivf");
+    try copyIVF("testfiles/sample01_vp8.ivf", "testfiles/out.ivf");
+    try checkIVF("testfiles/out.ivf");
 }
