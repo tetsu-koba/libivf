@@ -16,8 +16,8 @@ fn checkIVF(filename: []const u8) !void {
     try testing.expectEqualSlices(u8, &reader.header.fourcc, "VP80");
     try testing.expect(reader.header.width == 160);
     try testing.expect(reader.header.height == 120);
-    try testing.expect(reader.header.frame_rate == 15);
-    try testing.expect(reader.header.time_scale == 1);
+    try testing.expect(reader.header.framerate_num == 15);
+    try testing.expect(reader.header.framerate_den == 1);
     try testing.expect(reader.header.num_frames == 75);
 
     var frame_index: usize = 0;
@@ -51,8 +51,8 @@ fn copyIVF(filename: []const u8, outfiename: []const u8) !void {
     try testing.expectEqualSlices(u8, &reader.header.fourcc, "VP80");
     try testing.expect(reader.header.width == 160);
     try testing.expect(reader.header.height == 120);
-    try testing.expect(reader.header.frame_rate == 15);
-    try testing.expect(reader.header.time_scale == 1);
+    try testing.expect(reader.header.framerate_num == 15);
+    try testing.expect(reader.header.framerate_den == 1);
     try testing.expect(reader.header.num_frames == 75);
 
     var writer = try IVF.IVFWriter.init(outfile, &reader.header);
