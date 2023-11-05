@@ -59,8 +59,8 @@ pub const IVFReader = struct {
     }
 
     pub fn readIVFFrameHeader(self: *Self, frame_header: *IVFFrameHeader) !void {
-        frame_header.frame_size = try self.reader.readIntLittle(u32);
-        frame_header.timestamp = try self.reader.readIntLittle(u64);
+        frame_header.frame_size = try self.reader.readInt(u32, .little);
+        frame_header.timestamp = try self.reader.readInt(u64, .little);
     }
 
     pub fn readFrame(self: *Self, frame: []u8) !usize {
