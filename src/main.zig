@@ -1,7 +1,6 @@
 const std = @import("std");
 const fs = std.fs;
 const io = std.io;
-const os = std.os;
 
 const IVF = @import("ivf.zig");
 
@@ -12,7 +11,7 @@ pub fn main() !void {
 
     if (args.len < 2) {
         std.debug.print("Usage: {s} ivf-file\n", .{args[0]});
-        os.exit(1);
+        std.posix.exit(1);
     }
     const filename = args[1];
     try dumpIVFFile(filename);
